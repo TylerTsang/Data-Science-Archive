@@ -6,6 +6,8 @@ Combination of course practice problems and projects to showcase concepts explor
 * Linear Regression
 * Logistic Regression
 * K Nearest Neighbors
+* Decision Tree
+* Random Forest
 
 ## Projects
 Projects showcasing application of concepts into potential scenarios
