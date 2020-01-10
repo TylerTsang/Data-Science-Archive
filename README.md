@@ -8,6 +8,7 @@ Combination of course practice problems and projects to showcase concepts explor
 * K Nearest Neighbors
 * Decision Tree
 * Random Forest
+* K Means Clustering
 
 ## Projects
 Projects showcasing application of concepts into potential scenarios
