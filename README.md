@@ -10,6 +10,7 @@ Combination of course practice problems and projects to showcase concepts explor
 * Random Forest
 * K Means Clustering
 * Natural Language Processing (NLP)
+* Tensorflow
 
 ## Projects
 Projects showcasing application of concepts into potential scenarios
