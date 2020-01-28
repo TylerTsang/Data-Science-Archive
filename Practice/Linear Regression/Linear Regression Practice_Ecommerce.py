@@ -97,6 +97,4 @@ coefficients
 # Might explore the relationship between Length of Membership and the app or website before concluding
 
 
-
-
-
+# Project Source: Pierian Data
