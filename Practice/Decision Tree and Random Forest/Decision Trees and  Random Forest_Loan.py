@@ -27,7 +27,6 @@
 #-------------------------------------------------
 # Importing Libraries
 
-import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -58,7 +57,7 @@ loan[loan['credit.policy']==0]['fico'].hist(alpha=0.5, color='red',
 plt.legend()
 plt.xlabel('FICO')
 
-# Now let's try and see the relationship on whether the loan has been paid and fico scores
+# Now let's try and see the relationship on whether the loan has been paid and FICO scores
 plt.figure(figsize=(10, 6))
 loan[loan['not.fully.paid']==1]['fico'].hist(alpha=0.5, color='red',
                                             bins=30, label='Not Fully Paid = 1')
@@ -67,32 +66,68 @@ loan[loan['not.fully.paid']==0]['fico'].hist(alpha=0.5, color='blue',
 plt.legend()
 plt.xlabel('FICO')
 
-#
+# Let's do a countplot and see if purpose had any relationship to loans being paid
 plt.figure(figsize=(10, 6))
 sns.countplot(data=loan, x='purpose', hue='not.fully.paid', palette='Set1')
 
-#
+# Let's see about FICO scores and interest rates
 sns.jointplot(data=loan, x='fico', y='int.rate', color='blue', s=5)
 
-#
+# Lastly, let's try FICO and interest rates as above but add some granularity
+# Let's add in whether borrowers meet credit criteria and whether they paid back
 plt.figure(figsize=(11,7))
 sns.lmplot(data=loan, x='fico', y='int.rate', hue='credit.policy',
            col='not.fully.paid', palette='Set1', scatter_kws={'s':5})
 
 #------------------------------------------------
+# Setting up the Data for the model
+
+# Purpose is our only categorical feature in the data set
+# Let's make it numerical so a machine can read it
+cat_feats = ['purpose']
+
+# Dummies replace categorical features and replace with 0 or 1 to indicate a feature occurs or not
+final_data = pd.get_dummies(loan, columns=cat_feats, drop_first=True)
+
+# To see whether categorical features were changed to dummy variables
+final_data.info()
+
+#------------------------------------------------
+#Train Test Split
+
+X = final_data.drop('not.fully.paid', axis=1)
+y = final_data['not.fully.paid']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+#------------------------------------------------
+# Decision Tree Model
+
+dtree = DecisionTreeClassifier()
+dtree.fit(X_train, y_train)
+
+predictions = dtree.predict(X_test)
+
+# It seems like the decision tree performed poorly, 
+# Let's see if a random forest will change that 
+print(confusion_matrix(y_test, predictions))
+print(classification_report(y_test, predictions))
+
+#------------------------------------------------
+# Random Forest Model
+
+rfc = RandomForestClassifier(n_estimators=500)
+rfc.fit(X_train, y_train)
+
+predictions = rfc.predict(X_test)
+
+# It seems like both our decision tree and random forest performed poorly
+# As a result, we should conclude that more feature engineering is needed to improve accuracy
+print(confusion_matrix(y_test, predictions))
+print(classification_report(y_test, predictions))
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+# Project Source: Pierian Data
