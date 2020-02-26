@@ -9,6 +9,7 @@ Combination of course practice problems and projects to showcase concepts explor
 * Decision Tree
 * Random Forest
 * K Means Clustering
+* Support Vector Machine (SVM)
 * Natural Language Processing (NLP)
 * Tensorflow
 
